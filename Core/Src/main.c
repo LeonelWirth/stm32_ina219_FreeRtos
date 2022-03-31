@@ -34,6 +34,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define INA219_1_ADDRESS 0x40 // No bridge
+#define INA219_2_ADDRESS 0x41 // Bridge in A0
+#define INA219_3_ADDRESS 0x44 // Bridge in A1
+#define INA219_4_ADDRESS 0x45 // Bridge in A0 and A1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,7 +46,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c1;
+ I2C_HandleTypeDef hi2c1;
 
 UART_HandleTypeDef huart3;
 
@@ -186,6 +190,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -315,7 +320,7 @@ void StartDefaultTask(void *argument)
 //	uint16_t val;
 	uint16_t rawCurrent = 0;
 	float current = 0;
-	while(!INA219_Init(&ina219, &hi2c1, INA219_ADDRESS));
+	while(!INA219_Init(&ina219, &hi2c1, INA219_2_ADDRESS));
 		  // inicializo el ina
 
 
@@ -393,5 +398,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
